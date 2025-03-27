@@ -1,0 +1,6 @@
+---
+  - name: instala o prometheus
+    hosts: prometheus
+    become: true
+    roles:
+      - role: prometheus
