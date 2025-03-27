@@ -1,5 +1,4 @@
 ---
 # defaults file for prometheus
-password_mail: "senha do email usado"
-mail: "email que vai mandar as mensagens"
-smtp_host_mail: "smtp do email usado:e a porta do smtp"
+bot_token_id: "id do token do bot usado"
+chat_id_num: "id do chat usado para mandar as mensagens do bot"
