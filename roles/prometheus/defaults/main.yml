@@ -1,0 +1,5 @@
+---
+# defaults file for prometheus
+password_mail: "senha do email usado"
+mail: "email que vai mandar as mensagens"
+smtp_host_mail: "smtp do email usado:e a porta do smtp"

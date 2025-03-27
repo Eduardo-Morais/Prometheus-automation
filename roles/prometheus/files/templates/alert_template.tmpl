@@ -1,0 +1,34 @@
+{{ define "__yucca_text_alert_list" }}
+{{ range . }}
+---
+🪪 <b>Alerta: {{ .Labels.alertname }}</b>
+{{- if .Annotations.summary }}
+📝 Resumo: {{ .Annotations.summary }}{{ end }}
+{{- if .Annotations.description }}
+📖 Descrição: {{ .Annotations.description }}{{ end }}
+
+🏷️ <b>Detalhes dos Rótulos:</b>
+{{ range .Labels.SortedPairs }}
+- <i>{{ .Name }}</i>: <code>{{ .Value }}</code>
+{{ end }}
+
+🔗 Links Rápidos:
+🛠   <a href="#">Grafana</a> | 💊 <a href="#">Alertmanager</a> | 💊 <a href="#">Prometheus</a>
+---
+{{ end }}
+{{ end }}
+
+{{ define "telegram.yucca.message" }}
+{{ if gt (len .Alerts.Firing) 0 }}
+🔥 <b>Alertas Ativos</b> 🔥
+Estes alertas estão atualmente ativos e requerem atenção:
+{{ template "__yucca_text_alert_list" .Alerts.Firing }}
+{{ end }}
+
+{{ if gt (len .Alerts.Resolved) 0 }}
+✅ <b>Alertas Resolvidos</b> ✅
+Os alertas a seguir foram resolvidos:
+{{ template "__yucca_text_alert_list" .Alerts.Resolved }}
+{{ end }}
+{{ end }}
+~        

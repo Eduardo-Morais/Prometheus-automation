@@ -1,0 +1,17 @@
+rule_files:
+  - alerts.yml
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['ip-da-maquina:9093']
+
+scrape_configs:
+  - job_name: 'node-exporter'
+
+    scrape_interval: 5s
+
+    static_configs:
+      - targets: ['ip-da-maquina-monitorada:3000']
+        labels:
+          group: "Grafana"

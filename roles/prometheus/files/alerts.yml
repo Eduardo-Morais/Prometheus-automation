@@ -1,0 +1,10 @@
+groups:
+  - name: node_exporter_alerts
+    rules:
+      - alert: NodeExporterDown
+        expr: up{job="node-exporter"} == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Node Exporter inativo em {{ $labels.instance }}"
