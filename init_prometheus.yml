@@ -1,6 +1,7 @@
 ---
   - name: instala o prometheus
     hosts: prometheus
+    gather_facts: yes
     become: true
     roles:
       - role: prometheus
