@@ -15,12 +15,12 @@
     dest: "{{ item.dest }}"
 
   loop:
-    - { src: 'caminho-ate-roles/prometheus/files/docker-compose-prometheus.yml', dest: '/home/{{ ansible_user_id }}/prometheus/docker-compose.yml' }
-    - { src: 'caminho-ate-roles/prometheus/files/prometheus.yml', dest: '/home/{{ ansible_user_id }}/prometheus' }
-    - { src: 'caminho-ate-roles/prometheus/files/alerts.yml', dest: '/home/{{ ansible_user_id }}/prometheus' }
-    - { src: 'caminho-ate-roles/prometheus/files/docker-compose-alertmanager.yml', dest: '/home/{{ ansible_user_id }}/alertmanager/docker-compose.yml' }
-    - { src: 'caminho-ate-roles/prometheus/files/alertmanager.yml', dest: '/home/{{ ansible_user_id }}/alertmanager' }
-    - { src: 'caminho-ate-roles/prometheus/files/templates/alert_template.tmpl', dest: '/home/{{ ansible_user_id }}/alertmanager/templates/alert_template.tmpl' }
+    - { src: 'docker-compose-prometheus.yml', dest: '/home/{{ ansible_user_id }}/prometheus/docker-compose.yml' }
+    - { src: 'prometheus.yml', dest: '/home/{{ ansible_user_id }}/prometheus' }
+    - { src: 'alerts.yml', dest: '/home/{{ ansible_user_id }}/prometheus' }
+    - { src: 'docker-compose-alertmanager.yml', dest: '/home/{{ ansible_user_id }}/alertmanager/docker-compose.yml' }
+    - { src: 'alertmanager.yml', dest: '/home/{{ ansible_user_id }}/alertmanager' }
+    - { src: 'templates/alert_template.tmpl', dest: '/home/{{ ansible_user_id }}/alertmanager/templates/alert_template.tmpl' }
 - name:
   shell: docker compose up -d
   args:
