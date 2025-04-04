@@ -1,5 +1,5 @@
 # IAC-Prometheus-Alert
-essa IAC foi criada para demonstrar como é realizado o deployment de um Prometheus com Alertmanager, para monitorar algumas VMs com NodeExport e notificar atráves de um chatbot do telegram.
+essa IAC foi criada para demonstrar como é realizado o deployment de um Prometheus com Alertmanager, para monitorar algumas VMs com NodeExport e notificar atráves de um chatbot do telegram, para utilizar essa IAC primeiro visite arquivo por arquivo para modificar as sessões necessarias, após a modificação, realize os passos abaixo.
 
 Pré-requisitos:
 
