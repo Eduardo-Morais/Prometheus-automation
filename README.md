@@ -1,5 +1,5 @@
-# IAC-Prometheus-Alert
-essa IAC foi criada para demonstrar como é realizado o deployment de um Prometheus com Alertmanager,com o intuito de monitorar VMs com NodeExport e notificar atráves de um chatbot do telegram,porém pode ser usada para outros tipos de monitoramento só adicionar o scrape no prometheus, para utilizar essa IAC primeiro visite arquivo por arquivo para modificar as sessões necessarias, após a modificação, realize os passos abaixo.
+# Automation Prometheus-Alert
+essa automação foi criado para demonstrar como funciona um deploy com ansible de um sistema de monitoramento e alertas com Prometheus e alertmanager, ansible é uma ferramente de automação de TI criada por alguns funcionarios da Red hat para facilitar o deployment de infra-estruturas e serviços que podem ser reutilizados, antes de usar essa automação sugiro que verifique arquivo por arquivo e faça as mudanças necessarias para fazer um deployment 100% funcional.
 
 Pré-requisitos:
 
