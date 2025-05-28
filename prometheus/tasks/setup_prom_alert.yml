@@ -1,0 +1,38 @@
+---
+- name: Detectar usuário padrão (UID >= 1000)
+  ansible.builtin.shell: "awk -F: '$3 >= 1000 && $1 != \"nobody\" { print $1; exit }' /etc/passwd"
+  register: default_user
+
+- name: cria pastas para organizar
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - /home/{{ default_user.stdout }}/prometheus
+    - /home/{{ default_user.stdout }}/alertmanager
+    - /home/{{ default_user.stdout }}/alertmanager/templates
+
+- name: copiando os templates necessarios
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - { src: 'prometheus.yml.j2', dest: '/home/{{ default_user.stdout }}/prometheus/prometheus.yml' }
+    - { src: 'alertmanager.yml.j2', dest: '/home/{{ default_user.stdout }}/alertmanager/alertmanager.yml' }
+    - { src: 'docker-compose-prometheus.yml.j2', dest: '/home/{{ default_user.stdout }}/prometheus/docker-compose.yml' }
+    - { src: 'docker-compose-alertmanager.yml.j2', dest: '/home/{{ default_user.stdout }}/alertmanager/docker-compose.yml' }
+- name: copiando os arquivos necessarios
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - { src: 'alerts.yml', dest: '/home/{{ default_user.stdout }}/prometheus' }
+    - { src: 'templates/alert_template.tmpl', dest: '/home/{{ default_user.stdout }}/alertmanager/templates/alert_template.tmpl' }
+- name: subindo os containers
+  shell: docker compose up -d
+  args:
+    chdir: "{{ item }}"
+
+  loop:
+    - /home/{{ default_user.stdout }}/prometheus
+    - /home/{{ default_user.stdout }}/alertmanager

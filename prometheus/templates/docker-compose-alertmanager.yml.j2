@@ -6,8 +6,8 @@ services:
       - 9093:9093
       - 9094:9094
     volumes:
-      - /home/{{ ansible_user_id }}/alertmanager/:/etc/alertmanager/:rw
-      - /home/{{ ansible_user_id }}/alertmanager/templates/:/etc/alertmanager/templates/
+      - /home/{{ default_user.stdout }}/alertmanager/:/etc/alertmanager/:rw
+      - /home/{{ default_user.stdout }}/alertmanager/templates/:/etc/alertmanager/templates/
     restart: always
     deploy:
       mode: global

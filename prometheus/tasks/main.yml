@@ -1,44 +1,15 @@
 ---
-# tasks file for prometheus
-- name: cria pastas para organizar
-  file:
-    path: "{{ item }}"
-    state: directory
-  loop:
-    - /home/{{ ansible_user_id }}/prometheus
-    - /home/{{ ansible_user_id }}/alertmanager
-    - /home/{{ ansible_user_id }}/alertmanager/templates
+- name: instala o docker
+  ansible.builtin.import_tasks: install_docker.yml
+  tags:
+    - docker
 
-- name: copiando os templates necessarios
-  ansible.builtin.template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-  loop:
-    - { src: 'prometheus.yml.j2', dest: '/home/{{ ansible_user_id }}/prometheus/prometheus.yml' }
-    - { src: 'alertmanager.yml.j2', dest: '/home/{{ ansible_user_id }}/alertmanager/alertmanager.yml' }
-    - { src: 'docker-compose-prometheus.yml.j2', dest: '/home/{{ ansible_user_id }}/prometheus/docker-compose.yml' }
-    - { src: 'docker-compose-alertmanager.yml.j2', dest: '/home/{{ ansible_user_id }}/alertmanager/docker-compose.yml' }
-- name: copiando os arquivos necessarios
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-  loop:
-    - { src: 'alerts.yml', dest: '/home/{{ ansible_user_id }}/prometheus' }
-    - { src: 'templates/alert_template.tmpl', dest: '/home/{{ ansible_user_id }}/alertmanager/templates/alert_template.tmpl' }
-- name: subindo os containers
-  shell: docker compose up -d
-  args:
-    chdir: "{{ item }}"
+- name: instala o Prometheus e o Alertmanager
+  ansible.builtin.import_tasks: setup_prom_alert.yml
+  tags:
+    - PromAlert
 
-  loop:
-    - /home/{{ ansible_user_id }}/prometheus
-    - /home/{{ ansible_user_id }}/alertmanager
-- name: verificando se tudo subiu de forma correta
-  ansible.builtin.uri:
-    url: "http://{{ ansible_default_ipv4.address }}:{{ item.port }}"
-    method: GET
-    status_code: 200
-  loop:
-    - { name: "Prometheus", port: 9090 }
-    - { name: "Alertmanager", port: 9093 }
-
+- name: verifica se esta tudo OK
+  ansible.builtin.import_tasks: verify.yml
+  tags:
+    - verify

@@ -3,8 +3,8 @@ services:
     image: prom/prometheus
     container_name: prometheus
     volumes:
-      - /home/{{ ansible_user_id }}/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - /home/{{ ansible_user_id }}/prometheus/alerts.yml:/etc/prometheus/alerts.yml
+      - /home/{{ default_user.stdout }}/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /home/{{ default_user.stdout }}/prometheus/alerts.yml:/etc/prometheus/alerts.yml
     ports:
       - "9090:9090"
 

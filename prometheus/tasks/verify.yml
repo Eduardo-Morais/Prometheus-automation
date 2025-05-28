@@ -1,0 +1,9 @@
+---
+- name: verificando se tudo subiu de forma correta
+  ansible.builtin.uri:
+    url: "http://{{ ansible_default_ipv4.address }}:{{ item.port }}"
+    method: GET
+    status_code: 200
+  loop:
+    - { name: "Prometheus", port: 9090 }
+    - { name: "Alertmanager", port: 9093 }
